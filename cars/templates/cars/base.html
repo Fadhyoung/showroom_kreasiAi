@@ -1,0 +1,21 @@
+<!-- cars/templates/cars/base.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Showroom Mobil</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        a { text-decoration: none; color: blue; }
+        .container { max-width: 800px; margin: auto; }
+        .card { border: 1px solid #ccc; padding: 15px; margin-bottom: 20px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><a href="{% url 'car_list' %}">🏢 Showroom Mobil</a></h1>
+        <hr>
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>

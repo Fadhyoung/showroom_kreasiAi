@@ -1,0 +1,16 @@
+<!-- cars/templates/cars/car_list.html -->
+{% extends 'cars/base.html' %}
+
+{% block content %}
+<h2>Daftar Mobil</h2>
+<a href="{% url 'car_add' %}">+ Tambah Mobil</a>
+{% for car in cars %}
+<div class="card">
+    <strong>{{ car.merk }} {{ car.model }}</strong> ({{ car.tahun }}) <br>
+    <a href="{% url 'car_detail' car.pk %}">Lihat Detail</a> |
+    <a href="{% url 'car_delete' car.pk %}">Hapus</a>
+</div>
+{% empty %}
+<p>Tidak ada mobil tersedia.</p>
+{% endfor %}
+{% endblock %}
