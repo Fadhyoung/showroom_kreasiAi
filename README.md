@@ -53,6 +53,7 @@ python manage.py migrate
 
 ### 4. Start the Server
 ```
+python manage.py tailwind start
 python manage.py runserver
 ```
 
