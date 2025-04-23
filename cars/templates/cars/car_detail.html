@@ -1,32 +1,31 @@
 <!-- cars/templates/cars/car_detail.html -->
-{% extends 'cars/base.html' %}
+{% extends 'cars/base.html' %} {% load action_buttons %} {% block content %}
+<div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+  <h2>Detail Mobil</h2>
+  <p><strong>Merk:</strong> {{ car.merk }}</p>
+  <p><strong>Model:</strong> {{ car.model }}</p>
+  <p><strong>Tahun:</strong> {{ car.tahun }}</p>
+  <p><strong>Harga Dasar:</strong> Rp {{ car.harga_dasar }}</p>
+  {% if car.dana_bank %}
+  <p><strong>Dana Bank:</strong> Rp {{ car.dana_bank }}</p>
+  <p><strong>Suku Bunga:</strong> {{ car.bunga }}%</p>
+  <p><strong>Cicilan Per Bulan:</strong> Rp {{ cicilan|floatformat:2 }}</p>
+  {% endif %}
+</div>
 
-{% block content %}
-<h2>Detail Mobil</h2>
-<p><strong>Merk:</strong> {{ car.merk }}</p>
-<p><strong>Model:</strong> {{ car.model }}</p>
-<p><strong>Tahun:</strong> {{ car.tahun }}</p>
-<p><strong>Harga Dasar:</strong> Rp {{ car.harga_dasar }}</p>
-{% if car.dana_bank %}
-    <p><strong>Dana Bank:</strong> Rp {{ car.dana_bank }}</p>
-    <p><strong>Suku Bunga:</strong> {{ car.bunga }}%</p>
-    <p><strong>Cicilan Per Bulan:</strong> Rp {{ cicilan|floatformat:2 }}</p>
-{% endif %}
-
-<hr>
+<hr />
 <h3>Riwayat Service</h3>
-<a href="{% url 'service_add' %}">+ Tambah Service</a>
-{% if services %}
-    <ul>
-        {% for s in services %}
-            <li>{{ s.tanggal }} - {{ s.deskripsi }} (Rp {{ s.biaya }})</li>
-        {% endfor %}
-    </ul>
+{% action_button 'service_add' 'Tambah Mobil' '+'%} {% if services %}
+<ul>
+  {% for s in services %}
+  <li>{{ s.tanggal }} - {{ s.deskripsi }} (Rp {{ s.biaya }})</li>
+  {% endfor %}
+</ul>
 {% else %}
-    <p>Belum ada service.</p>
+<p>Belum ada service.</p>
 {% endif %}
 
-<hr>
+<hr />
 <h3>HPP Mobil</h3>
 <p>Rp {{ hpp|floatformat:2 }}</p>
 {% endblock %}

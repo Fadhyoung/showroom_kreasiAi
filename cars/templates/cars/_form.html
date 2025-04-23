@@ -1,35 +1,47 @@
 <!-- cars/templates/cars/_form.html -->
 <div class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md">
-    <h2 class="text-2xl font-bold mb-6 text-gray-800">{{ title }}</h2>
+  <h2 class="text-2xl font-bold mb-6 text-gray-800">{{ title }}</h2>
+
+  <form method="post" class="space-y-4">
+    {% csrf_token %}
     
-    <form method="post" class="space-y-4">
-      {% csrf_token %}
-      
-      {% for field in form %}
-      <div class="space-y-1">
-        <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-gray-700">
-          {{ field.label }}
-        </label>
-        
+    {% for field in form %}
+    <div class="space-y-1">
+      <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-gray-700">
+        {{ field.label }}
+      </label>
+
+      {% if field.field.widget.input_type == 'date' %}
+        <!-- Special date input styling -->
+        <div class="relative">
+          {{ field }}
+          <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+            <svg class="w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
+            </svg>
+          </div>
+        </div>
+      {% else %}
         {{ field }}
-        
-        {% if field.help_text %}
-        <p class="text-xs text-gray-500">{{ field.help_text }}</p>
-        {% endif %}
-        
-        {% for error in field.errors %}
-        <p class="text-sm text-red-600">{{ error }}</p>
-        {% endfor %}
-      </div>
-      {% endfor %}
+      {% endif %}
+
+      {% if field.help_text %}
+      <p class="text-xs text-gray-500">{{ field.help_text }}</p>
+      {% endif %}
       
-      <div class="flex justify-end space-x-3 pt-4">
-        <a href="{{ cancel_url }}" class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">
-          Batal
-        </a>
-        <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
-          {{ submit_text }}
-        </button>
-      </div>
-    </form>
-  </div>
+      {% for error in field.errors %}
+      <p class="text-sm text-red-600">{{ error }}</p>
+      {% endfor %}
+    </div>
+    {% endfor %}
+
+    <div class="flex justify-end space-x-3 pt-4">
+      <button type="button" onclick="window.history.back()" class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">
+        Batal
+      </button>
+      <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        {{ submit_text }}
+      </button>
+    </div>
+  </form>
+</div>

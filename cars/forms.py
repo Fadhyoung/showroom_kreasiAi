@@ -32,5 +32,7 @@ class ServiceForm(forms.ModelForm):
         fields = '__all__'
         widgets = {
             'notes': forms.Textarea(attrs={'rows': 3}),
-            'service_date': forms.DateInput(attrs={'type': 'date'}),
-        }
+            'service_date': forms.TextInput(attrs={
+                'class': 'datepicker w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+            }),
+}

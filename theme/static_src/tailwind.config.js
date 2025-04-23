@@ -54,4 +54,8 @@ module.exports = {
         require('@tailwindcss/typography'),
         require('@tailwindcss/aspect-ratio'),
     ],
+    safelist: [
+        'bg-black', 'hover:bg-black',
+      ],
+    
 }
