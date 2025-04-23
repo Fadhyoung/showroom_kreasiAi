@@ -6,7 +6,6 @@
     <title>Showroom Mobil</title>
     {% tailwind_css %}
 
-    <!-- Flatpickr CSS (✔️ should be in <head>) -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
 
     <style>
@@ -27,7 +26,6 @@
         border-radius: 5px;
       }
 
-      /* Optional: Customize the appearance of native date inputs */
       input[type="date"] {
         appearance: none;
         -webkit-appearance: none;
@@ -46,7 +44,7 @@
   </head>
 
   <body>
-    <div class="w-2/3 h-full min-h-screen px-1 mx-auto border-x border-gray-200 shadow-lg bg-gray-50">
+    <div class="w-2/3 h-full min-h-screen max-w-7xl px-1 mx-auto border-x border-gray-200 shadow-lg bg-gray-50">
       <div class="w-full h-full min-h-screen relative border-x border-gray-200 bg-white">
         {% include 'cars/_navbar.html' %}
         {% include 'cars/_jumbotron.html' %}
@@ -56,7 +54,6 @@
       </div>
     </div>
 
-    <!-- Flatpickr JS (✔️ after DOM) -->
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {

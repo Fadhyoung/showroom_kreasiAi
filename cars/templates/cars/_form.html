@@ -1,8 +1,17 @@
-<!-- cars/templates/cars/_form.html -->
 <div class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md">
   <h2 class="text-2xl font-bold mb-6 text-gray-800">{{ title }}</h2>
 
-  <form method="post" class="space-y-4">
+  {% if messages %}
+  <div class="mb-4 space-y-2">
+    {% for message in messages %}
+    <div class="px-4 py-2 rounded {% if message.tags == 'error' %}bg-red-100 text-red-700{% else %}bg-green-100 text-green-700{% endif %}">
+      {{ message }}
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <form method="post" class="space-y-4" enctype="multipart/form-data">
     {% csrf_token %}
     
     {% for field in form %}
@@ -12,7 +21,6 @@
       </label>
 
       {% if field.field.widget.input_type == 'date' %}
-        <!-- Special date input styling -->
         <div class="relative">
           {{ field }}
           <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
@@ -20,6 +28,24 @@
               <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
             </svg>
           </div>
+        </div>
+      {% elif field.field.widget.input_type == 'file' %}
+        <div class="file-upload-wrapper">
+          <label class="block">
+            <span class="sr-only">Choose file</span>
+            <input type="{{ field.field.widget.input_type }}" name="{{ field.name }}" id="{{ field.id_for_label }}" 
+                   class="block w-full text-sm text-gray-500
+                          file:mr-4 file:py-2 file:px-4
+                          file:rounded-md file:border-0
+                          file:text-sm file:font-semibold
+                          file:bg-blue-50 file:text-blue-700
+                          hover:file:bg-blue-100" />
+          </label>
+          {% if field.value and field.field.widget.input_type == 'file' %}
+          <div class="mt-2">
+            <span class="text-sm text-gray-600">Current file: {{ field.value }}</span>
+          </div>
+          {% endif %}
         </div>
       {% else %}
         {{ field }}

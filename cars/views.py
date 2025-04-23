@@ -4,6 +4,9 @@ from django.shortcuts import render
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Car, Service
 from .forms import CarForm, ServiceForm
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .forms import CarForm
 
 def car_list(request):
     cars = Car.objects.all()
@@ -28,13 +31,22 @@ def car_detail(request, pk):
 
 def car_add(request):
     if request.method == 'POST':
-        form = CarForm(request.POST)
+        form = CarForm(request.POST, request.FILES)  # Added request.FILES for image upload
         if form.is_valid():
-            form.save()
+            car = form.save()
+            messages.success(request, f'{car.merk} {car.model} berhasil ditambahkan!')
             return redirect('car_list')
+        else:
+            messages.error(request, 'Terjadi kesalahan. Silakan periksa form Anda.')
     else:
         form = CarForm()
-    return render(request, 'cars/car_form.html', {'form': form})
+    
+    context = {
+        'form': form,
+        'title': 'Tambah Mobil Baru',
+        'submit_text': 'Simpan Mobil',
+    }
+    return render(request, 'cars/car_form.html', context)
 
 def car_delete(request, pk):
     car = get_object_or_404(Car, pk=pk)
