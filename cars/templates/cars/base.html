@@ -1,21 +1,67 @@
-<!-- cars/templates/cars/base.html -->
+{% load static tailwind_tags %}
+
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>Showroom Mobil</title>
+    {% tailwind_css %}
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
+
     <style>
-        body { font-family: Arial, sans-serif; margin: 40px; }
-        a { text-decoration: none; color: blue; }
-        .container { max-width: 800px; margin: auto; }
-        .card { border: 1px solid #ccc; padding: 15px; margin-bottom: 20px; border-radius: 5px; }
+      body {
+        font-family: Arial, sans-serif;
+        height: 100%;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: auto;
+      }
+
+      .card {
+        border: 1px solid #ccc;
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+      }
+
+      input[type="date"] {
+        appearance: none;
+        -webkit-appearance: none;
+        padding-right: 2.5rem;
+      }
+
+      input[type="date"]::-webkit-calendar-picker-indicator {
+        opacity: 0;
+        position: absolute;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+      }
     </style>
-</head>
-<body>
-    <div class="container">
-        <h1><a href="{% url 'car_list' %}">🏢 Showroom Mobil</a></h1>
-        <hr>
-        {% block content %}
-        {% endblock %}
+  </head>
+
+  <body>
+    <div class="w-2/3 h-full min-h-screen max-w-7xl px-1 mx-auto border-x border-gray-200 shadow-lg bg-gray-50">
+      <div class="w-full h-full min-h-screen relative border-x border-gray-200 bg-white">
+        {% include 'cars/_navbar.html' %}
+        {% include 'cars/_jumbotron.html' %}
+        <div class="p-10 flex flex-col gap-5">
+          {% block content %} {% endblock %}
+        </div>
+      </div>
     </div>
-</body>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        flatpickr(".datepicker", {
+          dateFormat: "Y-m-d",
+          allowInput: true,
+        });
+      });
+    </script>
+  </body>
 </html>

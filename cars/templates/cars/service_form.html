@@ -1,11 +1,5 @@
-<!-- cars/templates/cars/service_form.html -->
 {% extends 'cars/base.html' %}
 
 {% block content %}
-<h2>Tambah Service Mobil</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Simpan Service</button>
-</form>
+{% include 'cars/_form.html' with title='Tambah Service' submit_text='Simpan Mobil' %}
 {% endblock %}

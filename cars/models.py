@@ -7,6 +7,7 @@ class Car(models.Model):
     harga_dasar = models.DecimalField(max_digits=12, decimal_places=2)
     dana_bank = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
     bunga = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+    image = models.ImageField(upload_to='car_images/', null=True, blank=True)
 
     def __str__(self):
         return f"{self.merk} {self.model} ({self.tahun})"

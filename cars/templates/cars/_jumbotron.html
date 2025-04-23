@@ -1,0 +1,28 @@
+{% load action_buttons %}
+
+<div class="relative h-96 w-full overflow-hidden">
+
+    <div class="absolute inset-0 bg-black/50 z-10"></div>
+    <img 
+      src="https://images.pexels.com/photos/1075947/pexels-photo-1075947.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+      alt="Black Luxury Car"
+      class="absolute inset-0 w-full h-full object-cover"
+    >
+  
+    <div class="relative z-20 h-full flex flex-col justify-center items-start text-white px-10">
+      <h1 class="text-5xl font-bold mb-4">Welcome to KreasiAi</h1>
+      <p class="text-xl mb-6 max-w-2xl">
+        Get your dream car from our showroom. We offer premium vehicles with unbeatable prices and exceptional service.
+      </p>
+      
+      <div class="flex gap-4">
+        {% action_button 'car_add' 'Tambah Mobil' '+'%}
+        <a 
+          href="https://fadhyoung.github.io/Portofolio1/" target="_blank" 
+          class="px-6 py-3 border border-white hover:bg-white/10 rounded-md transition-colors"
+        >
+          Contact Developer
+        </a>
+      </div>
+    </div>
+  </div>

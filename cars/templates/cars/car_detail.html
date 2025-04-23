@@ -1,32 +1,116 @@
-<!-- cars/templates/cars/car_detail.html -->
 {% extends 'cars/base.html' %}
+{% load action_buttons %}
 
 {% block content %}
-<h2>Detail Mobil</h2>
-<p><strong>Merk:</strong> {{ car.merk }}</p>
-<p><strong>Model:</strong> {{ car.model }}</p>
-<p><strong>Tahun:</strong> {{ car.tahun }}</p>
-<p><strong>Harga Dasar:</strong> Rp {{ car.harga_dasar }}</p>
-{% if car.dana_bank %}
-    <p><strong>Dana Bank:</strong> Rp {{ car.dana_bank }}</p>
-    <p><strong>Suku Bunga:</strong> {{ car.bunga }}%</p>
-    <p><strong>Cicilan Per Bulan:</strong> Rp {{ cicilan|floatformat:2 }}</p>
-{% endif %}
+<div class="max-w-6xl mx-auto p-6 flex flex-col gap-10 bg-white rounded-lg shadow-md">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 
-<hr>
-<h3>Riwayat Service</h3>
-<a href="{% url 'service_add' %}">+ Tambah Service</a>
-{% if services %}
-    <ul>
-        {% for s in services %}
-            <li>{{ s.tanggal }} - {{ s.deskripsi }} (Rp {{ s.biaya }})</li>
-        {% endfor %}
-    </ul>
-{% else %}
-    <p>Belum ada service.</p>
-{% endif %}
+    <div class="space-y-4">
+      <h2 class="text-2xl font-bold text-gray-800">Detail Mobil</h2>
+      
+      {% if car.image %}
+      <div class="rounded-lg overflow-hidden border border-gray-200">
+        <img src="{{ car.image.url }}" alt="{{ car.merk }} {{ car.model }}" 
+             class="w-full h-auto object-cover">
+      </div>
+      {% else %}
+      <div class="w-full h-64 bg-gray-100 rounded-lg flex items-center justify-center text-gray-500">
+        <span>Tidak ada gambar tersedia</span>
+      </div>
+      {% endif %}
+    
+    </div>
 
-<hr>
-<h3>HPP Mobil</h3>
-<p>Rp {{ hpp|floatformat:2 }}</p>
+    <div class="space-y-6">
+      <!-- Car Specifications -->
+      <div class="space-y-2">
+        <h3 class="text-xl font-semibold text-gray-700">Spesifikasi</h3>
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <p class="text-sm text-gray-500">Merk</p>
+            <p class="font-medium">{{ car.merk }}</p>
+          </div>
+          <div>
+            <p class="text-sm text-gray-500">Model</p>
+            <p class="font-medium">{{ car.model }}</p>
+          </div>
+          <div>
+            <p class="text-sm text-gray-500">Tahun</p>
+            <p class="font-medium">{{ car.tahun }}</p>
+          </div>
+          <div>
+            <p class="text-sm text-gray-500">Harga Dasar</p>
+            <p class="font-medium">Rp {{ car.harga_dasar }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Financing Information -->
+      {% if car.dana_bank %}
+      <div class="space-y-2">
+        <h3 class="text-xl font-semibold text-gray-700">Pembiayaan</h3>
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <p class="text-sm text-gray-500">Dana Bank</p>
+            <p class="font-medium">Rp {{ car.dana_bank }}</p>
+          </div>
+          <div>
+            <p class="text-sm text-gray-500">Suku Bunga</p>
+            <p class="font-medium">{{ car.bunga }}%</p>
+          </div>
+          <div>
+            <p class="text-sm text-gray-500">Cicilan/Bulan</p>
+            <p class="font-medium">Rp {{ cicilan|floatformat:2 }}</p>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+
+      <!-- HPP Information -->
+      <div class="space-y-2">
+        <h3 class="text-xl font-semibold text-gray-700">HPP Mobil</h3>
+        <p class="text-2xl font-bold text-blue-600">Rp {{ hpp|floatformat:2 }}</p>
+      </div>
+    </div>
+  </div>  
+
+  <div class="mt-8 pt-6 border-t border-gray-200">
+    <div class="flex justify-between items-center mb-4">
+      <h3 class="text-xl font-semibold text-gray-700">Riwayat Service</h3>
+      {% action_button 'service_add' 'Tambah Service' '' car.pk %}
+    </div>
+    
+    {% if services %}
+    <div class="overflow-x-auto">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Deskripsi</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Biaya</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          {% for s in services %}
+          <tr>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ s.tanggal|date:"d M Y" }}</td>
+            <td class="px-6 py-4 text-sm text-gray-900">{{ s.deskripsi }}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Rp {{ s.biaya }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <div class="bg-gray-50 p-4 rounded-lg text-center">
+      <p class="text-gray-500">Belum ada riwayat service</p>
+    </div>
+    {% endif %}
+  </div>
+
+  <div class="mt-8 pt-6 flex justify-between items-center gap-5 border-t border-gray-200">
+    <h2 class="text-xl text-red-500">Danger</h2>
+    <a href="{% url 'car_delete' car.pk %}" class="w-fit p-5 rounded-md text-white bg-red-500 hover:text-red-800 text-sm font-medium">Hapus</a>
+  </div>
+</div>
 {% endblock %}
