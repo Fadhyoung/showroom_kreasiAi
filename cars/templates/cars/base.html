@@ -1,21 +1,37 @@
 <!-- cars/templates/cars/base.html -->
+{% load static tailwind_tags %}
+
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>Showroom Mobil</title>
+    {% tailwind_css %}
+
     <style>
-        body { font-family: Arial, sans-serif; margin: 40px; }
-        a { text-decoration: none; color: blue; }
-        .container { max-width: 800px; margin: auto; }
-        .card { border: 1px solid #ccc; padding: 15px; margin-bottom: 20px; border-radius: 5px; }
+      body {
+        font-family: Arial, sans-serif;
+        height: 100%;
+      }
+      .container {
+        max-width: 800px;
+        margin: auto;
+      }
+      .card {
+        border: 1px solid #ccc;
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+      }
     </style>
-</head>
-<body>
-    <div class="container">
-        <h1><a href="{% url 'car_list' %}">🏢 Showroom Mobil</a></h1>
-        <hr>
-        {% block content %}
-        {% endblock %}
+  </head>
+  <body>
+    <div class="w-2/3 h-screen px-1 mx-auto border-x border-gray-200 shadow-lg bg-gray-50">
+      <div class="s-full h-full flex-col border-x border-gray-200 bg-white">
+        {% include 'cars/_navbar.html' %}
+        <div class="p-10 flex flex-col gap-5">
+          {% block content %} {% endblock %}
+        </div>
+      </div>
     </div>
-</body>
+  </body>
 </html>

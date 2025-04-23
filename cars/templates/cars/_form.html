@@ -1,0 +1,35 @@
+<!-- cars/templates/cars/_form.html -->
+<div class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md">
+    <h2 class="text-2xl font-bold mb-6 text-gray-800">{{ title }}</h2>
+    
+    <form method="post" class="space-y-4">
+      {% csrf_token %}
+      
+      {% for field in form %}
+      <div class="space-y-1">
+        <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-gray-700">
+          {{ field.label }}
+        </label>
+        
+        {{ field }}
+        
+        {% if field.help_text %}
+        <p class="text-xs text-gray-500">{{ field.help_text }}</p>
+        {% endif %}
+        
+        {% for error in field.errors %}
+        <p class="text-sm text-red-600">{{ error }}</p>
+        {% endfor %}
+      </div>
+      {% endfor %}
+      
+      <div class="flex justify-end space-x-3 pt-4">
+        <a href="{{ cancel_url }}" class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">
+          Batal
+        </a>
+        <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          {{ submit_text }}
+        </button>
+      </div>
+    </form>
+  </div>

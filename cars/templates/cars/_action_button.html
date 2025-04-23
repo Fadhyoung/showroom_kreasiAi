@@ -1,0 +1,6 @@
+{% load action_buttons %}
+
+<a href="{{ url }}" class="{{ variant|add:'|'|add:type|button_classes }}">
+    {% if icon %}<span>{{ icon }}</span>{% endif %}
+    {{ text }}
+</a>
